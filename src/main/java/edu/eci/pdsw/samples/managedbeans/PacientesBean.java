@@ -33,6 +33,8 @@ import javax.faces.bean.SessionScoped;
 public class PacientesBean {
 
     TipoIdentificacion tipoIdentificacion = TipoIdentificacion.CC;
+    Paciente paciente;
+    List<Paciente> pacientesEnfermos;
 
     public void setTipoIdentificacion(TipoIdentificacion tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
@@ -42,18 +44,39 @@ public class PacientesBean {
         return tipoIdentificacion;
     }
 
-    public List<Paciente> getData() throws Exception{
+    public List<Paciente> getData() throws Exception {
         try {
             return ServiciosPacientesFactory.getInstance().getForumsServices().consultarPacientes();
         } catch (ExcepcionServiciosSuscripciones ex) {
-            
             throw ex;
         }
-        
     }
 
     public TipoIdentificacion[] getTiposIdentificacion() {
         return TipoIdentificacion.values();
     }
-    
+
+    public void loadPaciente(int id) {
+        try {
+            paciente = ServiciosPacientesFactory.getInstance().getForumsServices().consultarPacientesPorId(id, tipoIdentificacion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void loadPacientesEnfermos() {
+        try {
+            pacientesEnfermos = ServiciosPacientesFactory.getInstance().getForumsServices().consultarMenoresConEnfermedadContagiosa();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Paciente> getPacientesEnfermos() {
+        return pacientesEnfermos;
+    }
 }

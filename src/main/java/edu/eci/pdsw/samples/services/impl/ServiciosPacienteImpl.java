@@ -34,12 +34,22 @@ public class ServiciosPacienteImpl implements ServiciosPaciente {
 
     @Override
     public Paciente consultarPacientesPorId(int id, TipoIdentificacion tipoIdentificacion) throws ExcepcionServiciosSuscripciones {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return daoPaciente.load(id, tipoIdentificacion);
+        } catch (PersistenceException e) {
+            throw new ExcepcionServiciosSuscripciones(e);
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Paciente> consultarMenoresConEnfermedadContagiosa() throws ExcepcionServiciosSuscripciones {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return daoPaciente.loadAllEnfermedad();
+        } catch (PersistenceException e) {
+            throw new ExcepcionServiciosSuscripciones(e);
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
